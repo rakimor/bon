@@ -1,0 +1,6 @@
+---
+- name: Install bingo/bongo server
+  hosts: bingo
+  roles: 
+    - bingo
+

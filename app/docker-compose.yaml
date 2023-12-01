@@ -1,0 +1,83 @@
+version: "3.7"
+services:
+  autoheal:
+    restart: always
+    image: willfarrell/autoheal
+    environment:
+      - AUTOHEAL_CONTAINER_LABEL=all
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+
+  bingo-one:
+    image: bingo
+    build:
+      context: bingo
+      dockerfile: Dockerfile
+    deploy:
+      replicas: 1
+    environment:  
+      VIRTUAL_HOST: "bingo-backend-host"
+      VIRTUAL_PORT: ${PORT}
+    healthcheck:
+      test: curl --fail -s http://[::]:${PORT}/ping
+      interval: 5s
+      timeout: 2s
+      start_period: 30s
+      retries: 1
+    networks:
+      - bingo_network
+    volumes:
+      - /dev/null:/opt/bongo/logs/${LOG_DIR}/main.log
+      - ./config.yaml:/opt/bingo/config.yaml:ro
+    restart: always
+  
+  
+  bingo-two:
+    image: bingo
+    build:
+      context: bingo
+      dockerfile: Dockerfile
+    deploy:
+      replicas: 1
+    environment:  
+      VIRTUAL_HOST: "bingo-backend-host"
+      VIRTUAL_PORT: ${PORT}
+    healthcheck:
+      test: curl --fail -s http://[::]:${PORT}/ping
+      interval: 5s
+      timeout: 2s
+      start_period: 30s
+      retries: 1
+    networks:
+      - bingo_network
+    volumes:
+      - /dev/null:/opt/bongo/logs/${LOG_DIR}/main.log
+      - ./config.yaml:/opt/bingo/config.yaml:ro
+    restart: always
+  
+  frontend:
+    image: front
+    build:
+      context: front
+      dockerfile: Dockerfile    
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      DEFAULT_HOST: "bingo-backend-host"
+      ENABLE_IPV6: "true"
+      HTTPS_METHOD: "noredirect"
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - ./certs:/etc/nginx/certs
+    networks:
+      - bingo_network
+
+networks:
+  bingo_network:
+     enable_ipv6: true
+     ipam:
+       config:
+         - subnet: 2001:0DB8::/112
+
+ 

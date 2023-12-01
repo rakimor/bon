@@ -1,0 +1,11 @@
+#cloud-config
+
+users:
+  - default
+  - name: ansible
+    shell: /bin/bash
+    sudo: ['ALL=(ALL) NOPASSWD:ALL']
+    lock_passwd: false
+    ssh_authorized_keys:
+      - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDWezKfTf4BPsUTlOuiKl94D5T+7y8kAazWG2iRaettdamFO+CjcGi4Av2qsuXQy9r/oTqj1GXf2vJbpLitXtUEp4AFohizWQmCu9WQQldVO7dHULf/61C6nmbz7xpIq9A59Gi9edhAZnrI0vpvUK5ACZFhMdEdw41QD7X4aiTaMfAcUBGsdl8BJEHG0lrirDf9ZKE7Ab9XCxioGV+wI4IwT26M6M0JRdIDz7dx8j1HTs7TE3aQgIt+hQmhDCyuniSj3p20VXgMfLQxBtd2ksG3wtVS57yO6POQpVhjNZEQm0u8CgS5QfVyKtbVAMvb6y8m7Ok91yeYtSGGWdb2lHQ633hqb/SupigkMbcRRHYyj4a3p4Ipp/9POuNBt71JeyNo849ysCXPHvxpGwGhCDPzH12jfWDyj6/63t1UIeaKgCIMxj1ASvJyX7XkWUCQ7Qjj5U0TmiwC1rHy5P6j600g+7yXJUQdAYng9AYwQOeiYXemWFKUuJTo07GYDBTQ2eU= sam@SAM-LAPTOP
+

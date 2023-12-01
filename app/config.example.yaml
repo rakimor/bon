@@ -1,0 +1,10 @@
+student_email: mail@yandex.ru
+postgres_cluster:
+  hosts:
+  - address: psql_cluster.mdb.yandexcloud.net
+    port: 6432
+  user: psql_user
+  password: psql_password
+  db_name: bingo
+  ssl_mode: verify-full
+  use_closest_node: false
